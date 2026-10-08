@@ -1,0 +1,53 @@
+[project]
+name = "onnx-predictor-yolo"
+version = "0.1.0"
+description = "Typed YOLO/YOLOE ONNX inference with batching, async execution, and dynamic quantization"
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { text = "MIT" } 
+authors = [
+    { name = "Winter Yu", email = "winter741258@126.com" }
+]
+requires-python = ">=3.10"
+keywords = ["yolo", "yolo26", "yoloe", "onnx", "object-detection", "segmentation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Typing :: Typed",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+dependencies = ["numpy>=1.24", "opencv-python-headless>=4.8", "pyyaml>=6"]
+
+[project.optional-dependencies]
+cpu = ["onnxruntime>=1.18"]
+gpu = ["onnxruntime-gpu>=1.18"]
+quantization = ["onnx>=1.16"]
+
+[dependency-groups]
+dev = ["pytest>=8", "pytest-html>=4.1", "ruff>=0.11"]
+
+[tool.uv]
+conflicts = [[{ extra = "cpu" }, { extra = "gpu" }]]
+
+[tool.uv.build-backend]
+source-include = ["README.zh-CN.md"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: inference with local ONNX weights and test images",
+    "quantization: conversion and inference of real quantized models",
+]
+junit_family = "xunit1"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"

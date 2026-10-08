@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.test-artifacts/
+dist/
+*.egg-info/
+*.onnx
+docs/
+weights/
